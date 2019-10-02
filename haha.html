@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to get minimum # of coins for change</p>
+
+<button onclick="Regex()">Click Me!</button>
+
+<script>
+function Regex(){
+    myJsonString = '{"id":"1", "name":"sb", "age":"sb", "gender":"sb"}';
+    myJsonString2 = myJsonString.replace(/"([^"]+)"\s*:\s*/g, '$1:')
+    console.log(myJsonString2);
+}
+</script>
+</body>
+</html>
+
