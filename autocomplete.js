@@ -1,4 +1,5 @@
 // AUTO COMPLETE
+var taskmemory = [];
 var autoComplete = (value) => {
   document.getElementById('datalist').innerHTML = '';
   l = value.length;
