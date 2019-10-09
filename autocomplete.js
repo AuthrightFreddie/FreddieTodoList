@@ -21,7 +21,7 @@ export default function createAutoComplete() {
 
   function autoComplete(value) {
     document.getElementById('datalist').innerHTML = '';
-    l = value.length;
+    let l = value.length;
     for (let i = 0; i < taskmemory.length; i++) {
       if (((taskmemory[i].toLowerCase()).indexOf(value.toLowerCase())) > -1) {
         const node = document.createElement("option");

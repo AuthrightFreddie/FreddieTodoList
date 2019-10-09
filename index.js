@@ -1,7 +1,6 @@
 import Time from './Time.js';
 import createAutoComplete from './autocomplete.js';
 
-
 let todolist = new Time(new Date())
 document.getElementById('wds').innerHTML = todolist.getWeekdayName();
 document.getElementById('Time').innerHTML = todolist.getTimeInfo();
@@ -9,6 +8,11 @@ document.getElementById('energypct').innerHTML = todolist.getEnergyPct();
 document.getElementById('lblGreetings').innerHTML = todolist.getGreetingInfo();
 document.getElementById('Date').innerHTML = todolist.getMonthInfo();
 
+let {autoComplete, getTaskMemory, addTaskMemory} = createAutoComplete();
+
+document.getElementById("new-task").addEventListener('keyup', (e) => {
+  autoComplete(e.target.value);
+});
 
 //Todolist Functions
 let newTask = document.querySelector('#new-task');
@@ -60,6 +64,7 @@ const doneTask = function () {
   console.log("Move Task to complete");
   //GRAB THE CHECKBOX'S PARENT ELEMENT, THE LI IT'S IN
   let listItem = this.parentNode;
+  console.log(listItem)
   //CREATE AND INSERT THE DONE BUTTON
   let undoBtn = document.createElement("button"); // <button>
   undoBtn.innerText = "Undo";
