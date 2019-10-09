@@ -1,8 +1,45 @@
+// Timer Infos
+let myDate = new Date();
+let days = ("0" + myDate.getDate()).slice(-2)
+let hrs = myDate.getHours();
+let mins = ("0" + myDate.getMinutes()).slice(-2)
+const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+"Friday", "Saturday"];
+let wds = weekdays[myDate.getDay()];
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+let months = monthNames[myDate.getMonth()];
+let energypct = ((17.5 - hrs - mins/60)/0.08).toFixed(0) + '%'
+switch (days % 10) {
+  case 1:
+    sufix = "st";
+  case 2:
+    sufix = "nd";
+  case 3:
+    sufix = "rd";
+  default:
+    sufix = "th";
+}
+document.getElementById('wds').innerHTML =wds;
+document.getElementById('Date').innerHTML =months + ' ' + days+sufix;
+document.getElementById('Time').innerHTML =hrs + ':' + mins;
+document.getElementById('energypct').innerHTML =energypct;
+// Greeting Infos
+let greet;
+if (hrs < 12)
+  greet = 'Good Morning!';
+else if (hrs >= 12 && hrs <= 17)
+  greet = 'Good Afternoon!';
+else if (hrs >= 17 && hrs <= 24)
+  greet = 'Good Evening!';
+document.getElementById('lblGreetings').innerHTML = greet;
+
 //Todolist Functions
 let newTask = document.querySelector('#new-task');
 let addTaskBtn = document.querySelector('#addTask');
 let toDoUl = document.querySelector("#incomplete-tasks");
 let completeUl =  document.querySelector("#complete-tasks");
+var taskmemory = [];
 
 //Creating the actural task list item
 var createNewTask = (task) => {
@@ -31,6 +68,7 @@ var addTask = () => {
   if(taskmemory.indexOf(newTask.value) === -1) {
     taskmemory.push(newTask.value);
   }
+  // toDoUl.appendChild(listItem);
   toDoUl.insertBefore(listItem, toDoUl.childNodes[0])
   newTask.value="";
   bindIncompleteItems(listItem, doneTask);
@@ -55,8 +93,6 @@ var doneTask = function(){
   listItem.appendChild(undoBtn);
   var doneBtn = listItem.querySelector("button.done");
   doneBtn.remove();
-  var deleteBtn = listItem.querySelector("button.delete");
-  deleteBtn.className="delete2";
   //PLACE IT INSIDE THE COMPLETED LIST
   completeUl.appendChild(listItem);
   bindCompleteItems(listItem, undoTask);
@@ -73,8 +109,6 @@ var undoTask = function(){
   listItem.appendChild(doneBtn);
   var undoBtn = listItem.querySelector("button.undo");
   undoBtn.remove();
-  var deleteBtn = listItem.querySelector("button.delete2");
-  deleteBtn.className="delete";
   //PLACE IT INSIDE THE COMPLETED LIST
   toDoUl.appendChild(listItem);
   bindIncompleteItems(listItem, doneTask);
@@ -101,7 +135,7 @@ var bindCompleteItems = function(taskItem, undoTask){
   console.log("Binding the complete list...");
   //BIND UNDO & DELETE BUTTON
   var undoBtn=taskItem.querySelector("button.undo");
-	var deleteBtn=taskItem.querySelector("button.delete2");
+	var deleteBtn=taskItem.querySelector("button.delete");
   undoBtn.onclick=undoTask;
   deleteBtn.onclick=deleteTask;
 };
@@ -114,3 +148,17 @@ for(var i=0; i < completeUl.children.length; i++) {
 }
 
 addTaskBtn.addEventListener("click", addTask);
+
+// AUTO COMPLETE
+var autoComplete = (value) => {
+  document.getElementById('datalist').innerHTML = '';
+  l = value.length;
+  for (let i=0; i<taskmemory.length; i++) {
+    if(((taskmemory[i].toLowerCase()).indexOf(value.toLowerCase()))>-1) { 
+      const node = document.createElement("option"); 
+      const val = document.createTextNode(taskmemory[i]); 
+      node.appendChild(val); 
+      document.getElementById("datalist").appendChild(node); 
+    } 
+  }
+}
