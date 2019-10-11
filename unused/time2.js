@@ -1,4 +1,4 @@
-class Time {
+export default class Time2 {
     constructor(haha) {
         this.myDate = haha;
     }
@@ -50,9 +50,3 @@ class Time {
         return greet;
     }
 }
-todolist = new Time(new Date())
-document.getElementById('wds').innerHTML = todolist.getWeekdayName();
-document.getElementById('Time').innerHTML = todolist.getTimeInfo();
-document.getElementById('energypct').innerHTML = todolist.getEnergyPct();
-document.getElementById('lblGreetings').innerHTML = todolist.getGreetingInfo();
-document.getElementById('Date').innerHTML = todolist.getMonthInfo();
